@@ -4,10 +4,10 @@ metadata:
   name: postgres
 spec:
   ports:
-  - name: pgql
-    port: 5432
-    targetPort: 5432
-    protocol: TCP
+    - name: pgql
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
   selector:
     app: postgres
 
@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:9.6
+          image: postgres:alpine
           env:
             - name: POSTGRES_USER
               value: dev
@@ -43,5 +43,5 @@ spec:
       volumes:
         - name: pg-data
           hostPath:
-            path: /tmp/pgdata
+            path: /tmp
             type: DirectoryOrCreate
