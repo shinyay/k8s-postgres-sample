@@ -43,5 +43,5 @@ spec:
       volumes:
         - name: pg-data
           hostPath:
-            path: /tmp
+            path: /Users/shinyay/Temp/pgdata
             type: DirectoryOrCreate
