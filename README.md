@@ -60,3 +60,69 @@ Type "help" for help.
 dev=# \d
 No relations found.
 ```
+
+## Deployment with Persistence
+
+```
+$ kubectl apply -f postgres-singlenode-volume/postgres-hostpath.yml
+
+service "postgres" created
+deployment.extensions "postgres" created
+```
+
+```
+$ kubectl get pods
+
+NAME                        READY     STATUS    RESTARTS   AGE
+postgres-77cc684d9f-76lds   1/1       Running   0          10s
+```
+
+```
+$ kubectl exec -it postgres-77cc684d9f-76lds /bin/bash
+```
+
+```
+bash-4.4# psql -U dev
+psql (10.5)
+Type "help" for help.
+
+dev=# create table sample();
+CREATE TABLE
+dev=# \d
+        List of relations
+ Schema |  Name  | Type  | Owner
+--------+--------+-------+-------
+ public | sample | table | dev
+(1 row)
+
+dev=# \q
+```
+
+```
+$ kubectl delete pod postgres-77cc684d9f-76lds
+pod "postgres-77cc684d9f-76lds" deleted
+```
+
+```
+$ kubectl get pods
+
+NAME                        READY     STATUS    RESTARTS   AGE
+postgres-77cc684d9f-hp28m   1/1       Running   0          7s
+```
+
+```
+$ kubectl exec -it postgres-77cc684d9f-hp28m /bin/bash
+```
+
+```
+bash-4.4# psql -U dev
+psql (10.5)
+Type "help" for help.
+
+dev=# \d
+        List of relations
+ Schema |  Name  | Type  | Owner
+--------+--------+-------+-------
+ public | sample | table | dev
+(1 row)
+```
