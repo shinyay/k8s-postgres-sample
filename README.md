@@ -211,3 +211,33 @@ dev=# \d
  public | sample | table | dev
 (1 row)
 ```
+
+## Volume Types for Kubernetes
+
+|ボリューム種類名 | 分類      | 永続性 | マルチライター |可用性| 概要　|
+|:-------|:---------|:------|:----|:----|:----|:----|
+|[emptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir)|k8s native|なし|ポッド内|なし|ポッドが存在する間の一時的ボリューム| 
+|[hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostPath)|k8s native|ノード内|ノード内|なし|ポッドをホストするノードのファイルシステム上のファイルまたはディレクトリをマウント|
+|[local](https://kubernetes.io/docs/concepts/storage/volumes/#local)| alpha since k8s 1.7 |ノード内|ノード内|なし|ノードのストレージデバイスをマウント
+|[persistentVolumeClaim](https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim)|k8s native|あり|クラスタ内|下位依存|永続ボリュームをポッドにマウント|
+|[projected](https://kubernetes.io/docs/concepts/storage/volumes/#projected)|k8s native|あり|-|-|projectedは既存のボリュームを同一ディレクトリに投影するもので、secret, downwardAPI, configMapがある|
+|[secret](https://kubernetes.io/docs/concepts/storage/volumes/#secret)|k8s native|あり|不可|-|ポッドにパスワードなどの機密情報を渡すために使用
+|[configMap](https://kubernetes.io/docs/concepts/storage/volumes/#configmap)|k8s native|あり|不可|-|ポッドにコンフィギュレーションデータを注入する方法
+|[downwardAPI](https://kubernetes.io/docs/concepts/storage/volumes/#downwardapi)|k8s native|？|？|-|ディレクトリをマウントしてテキストを書き出し
+|[csi](https://kubernetes.io/docs/concepts/storage/volumes/#csi)| alpha since k8s 1.9  |？|？|-|コンテナオーケストレーたの業界標準インターフェイスを確立しようとする仕様
+|[iscsi](https://kubernetes.io/docs/concepts/storage/volumes/#iscsi)|業界標準|あり|不可|下位依存|iSCSIボリュームをポッドにマウント
+|[nfs](https://kubernetes.io/docs/concepts/storage/volumes/#nfs)|業界標準|あり|可能|下位依存|NFSのファイルシステムをポッドにマウント
+|[cephfs](https://kubernetes.io/docs/concepts/storage/volumes/#cephfs) |OSS分散ストレージ|あり|可能|あり| OpenStack定番の分散ストレージ、既存のCephFSのボリュームをポッドにマウント、
+|[glusterfs](https://kubernetes.io/docs/concepts/storage/volumes/#glusterfs) |OSS分散ストレージ|あり|可能|あり|大規模並列ネットワークファイルシステム、既存のGlusterFSをポッドにマウント
+|[flocker](https://kubernetes.io/docs/concepts/storage/volumes/#flocker) |OSS分散ストレージ|あり|可能|あり|ZFSベースのDocker用ボリュームをポッドにマウント
+|[awsElasticBlockStore](https://kubernetes.io/docs/concepts/storage/volumes/#awselasticblockstore)|クラウド提供|あり|ノード内|あり|EC2上のノードにEBSをマウント、ポッドから利用
+|[azureDisk](https://kubernetes.io/docs/concepts/storage/volumes/#azuredisk)|クラウド提供|あり|？|あり|AzureのDISKをポッドにマウント
+|[azureFile](https://kubernetes.io/docs/concepts/storage/volumes/#azurefile)|クラウド提供|あり|可|あり|AzureのSMBファイルシステムをポッドにマウント
+|[gcePersistentDisk](https://kubernetes.io/docs/concepts/storage/volumes/#gcepersistentdisk)|クラウド提供|あり|可|あり|Google Compute Engine (GCE) の永続ボリュームをポッドにマウント
+|[portworxVolume](https://kubernetes.io/docs/concepts/storage/volumes/#portworxvolume)|プロプライエタリSW|あり|？|あり|ハイパーコンバージド基盤の伸縮可能なボリュームに、ポッドにマウント
+|[scaleIO](https://kubernetes.io/docs/concepts/storage/volumes/#scaleio)|プロプライエタリSW|あり|可能|あり|EMCが開発にしたソフトウェア・デファインド・ブロックストレージをポッドにマウント
+|[storageOS](https://kubernetes.io/docs/concepts/storage/volumes/#storageos)|プロプライエタリSW|あり|可能|あり|コンテナとしてk8s内で実行できるボリュームをポッドにマウント|
+|[vsphereVolume](https://kubernetes.io/docs/concepts/storage/volumes/#storageos)|プロプライエタリSW|あり|可能|あり|VMwareの仮想ボリュームをポッドでマウント|
+|[quobyte](https://kubernetes.io/docs/concepts/storage/volumes/#quobyte)|プロプライエタリSW|あり|可能|あり|データセンターレベルのファイルシステムをポッドにマウント|
+|[gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo)|other|-|-|-|空のディレクトリをマウントし、gitリポジトリをクローンしてポッドに使用させます
+|[fibre channel](https://kubernetes.io/docs/concepts/storage/volumes/#fc-fibre-channel)|専用H/W|あり|不可|下位依存|既存のファイバチャネルのボリュームをポッドにマウント
