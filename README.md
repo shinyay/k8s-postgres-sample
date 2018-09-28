@@ -27,6 +27,32 @@ dev=# \d
 dev=# \q
 ```
 
+### PostgreSQL Container with Persistence Volume
+
+#### Docker Volume
+```
+$ docker volume create --name pgdata
+```
+
+```
+$ docker volume ls
+DRIVER              VOLUME NAME
+local               043e620b18ab8c9badd2908d86f2d7140114f49705da4553e397e01fe55b5240
+  :
+local               f31c4b74ebeac231fe1cee57ddf4b62c82cc283d0012b5317fba6880d0d6d293
+local               f3a3777c5b12f5e9772b8a02e01f5f094b47214c68034629656808ea7e4e8efe
+local               pgdata
+```
+
+```
+$ docker volume rm pgdata
+```
+
+#### PostgeSQL Contariner mounted Data Volume
+```
+$ docker run -d --rm --name postgres -e POSTGRES_USER=dev -p 5432:5432 -v pgdata:/var/lib/postgresql/data postgres:alpine
+```
+
 ## Deployment without Persistence
 ```
 $ kubectl apply -f postgres-without-persistence/postgres.yml
