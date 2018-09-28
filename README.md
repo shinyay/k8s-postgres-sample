@@ -1,5 +1,32 @@
 # PostgresSQL on Kubernetes
 
+- [PostgreSQL Official Repository](https://hub.docker.com/_/postgres/)
+
+## PostgreSQL on Docker
+### PostgeSQL Container without persistence
+```
+$ docker run -d --rm --name postgres -e POSTGRES_USER=dev -e POSTGRES_PASSWORD=dev -p 5432:5432 postgres:alpine
+```
+
+```
+$ docker exec -it postgres /bin/bash
+
+bash-4.4# psql -U dev
+psql (10.5)
+Type "help" for help.
+
+dev=# create table sample();
+CREATE TABLE
+dev=# \d
+        List of relations
+ Schema |  Name  | Type  | Owner
+--------+--------+-------+-------
+ public | sample | table | dev
+(1 row)
+
+dev=# \q
+```
+
 ## Deployment without Persistence
 ```
 $ kubectl apply -f postgres-without-persistence/postgres.yml
