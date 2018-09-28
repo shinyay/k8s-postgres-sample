@@ -102,11 +102,8 @@ postgres-bd5cc4c99-dbtjk   0/1       Terminating   0          3m
 ```
 
 ```
-$ kubectl exec -it postgres-bd5cc4c99-cdhzk /bin/bash
-```
+$ kubectl exec -it postgres-bd5cc4c99-cdhzk -- psql -U dev
 
-```
-root@postgres-bd5cc4c99-cdhzk:/# psql -U dev
 psql (9.6.10)
 Type "help" for help.
 
